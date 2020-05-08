@@ -1,3 +1,10 @@
+# OpenGarage Firmware
+
+## This repo contains custom modifications to the stock OpenGarage firmware. 
+
+My intent is to add a feature to eliminate an issue I was seeing in my device. I'm hoping to add configuration variables that will allow the user to add specific acceptable reading ranges. My sensor reads erroneous values (always consistently the same wrong value). I want to add a UI setting that allows the sensor to dismiss the readings if they are in a specific range.
+
+## For the stock firmware notes please see the following information:
 
 This folder contains firmware source code and documentation for OpenGarage. For details, visit [http://opengarage.io](http://opengarage.io)
 
