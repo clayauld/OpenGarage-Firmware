@@ -103,6 +103,11 @@ enum {
 #define DEFAULT_LOG_SIZE    100
 #define MAX_LOG_SIZE       500
 #define ALARM_FREQ         1000
+
+// Custom deadband
+#define DEADBAND_LOW       0
+#define DEADBAND_HIGH      10
+
 // door status histogram
 // number of values (maximum is 8)
 #define DOOR_STATUS_HIST_K  4

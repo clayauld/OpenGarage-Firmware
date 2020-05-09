@@ -4,6 +4,38 @@
 
 My intent is to add a feature to eliminate an issue I was seeing in my device. I'm hoping to add configuration variables that will allow the user to add specific acceptable reading ranges. My sensor reads erroneous values (always consistently the same wrong value). I want to add a UI setting that allows the sensor to dismiss the readings if they are in a specific range.
 
+Custom code has been added to two files to enable a "deadband" in the ultrasonic sensor that will not trigger any changes. This was added to correct erroneous readings from my ultrasonic sensor. It would sporatically kick out a reading of 6 cm when I knew that was invalid. My code creates a deadband between 0 cm and 10 cm where the new, incorrect will be discarded in favor of the last known acceptable reading. The changes are as follows:
+
+defines.h starting at line 107
+
+```c
+// Custom deadband
+#define DEADBAND_LOW       0
+#define DEADBAND_HIGH      10
+```
+
+main.cpp starting at line 1086
+```c
+      /* BEGIN Custom logic
+      /* Check to see if the distance measurement is outside the deadband. 
+      /* If it is then set distance variable to the new measurement.
+      /* If it is not, then set the distance variable to the old measurement. */
+      old_distance = distance; // Cache the old distance variable
+      new_distance = og.read_distance();
+      //distance = og.read_distance();
+      if (new_distance <= deadband_high) 
+      {
+       if (new_distance >= deadband_low)
+        distance = old_distance;
+        DEBUG_PRINTLN("Measurement is inside deadband range!");
+      }
+      else 
+      {
+        distance = new_distance;
+      }
+      /* END Custom logic */
+```
+
 ## For the stock firmware notes please see the following information:
 
 This folder contains firmware source code and documentation for OpenGarage. For details, visit [http://opengarage.io](http://opengarage.io)

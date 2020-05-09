@@ -1076,9 +1076,32 @@ void check_status() {
     aux_ticker.once_ms(25, og.set_led, (byte)LOW);
     uint threshold = og.options[OPTION_DTH].ival;
     uint vthreshold = og.options[OPTION_VTH].ival;
+    uint deadband_low = DEADBAND_LOW;
+    uint deadband_high = DEADBAND_HIGH;
+    uint old_distance = 0;
+    uint new_distance = 0;
     if ((og.options[OPTION_MNT].ival == OG_MNT_SIDE) || (og.options[OPTION_MNT].ival == OG_MNT_CEILING)){
       //sensor is ultrasonic
-      distance = og.read_distance();
+      
+      /* BEGIN Custom logic
+      /* Check to see if the distance measurement is outside the deadband. 
+      /* If it is then set distance variable to the new measurement.
+      /* If it is not, then set the distance variable to the old measurement. */
+      old_distance = distance; // Cache the old distance variable
+      new_distance = og.read_distance();
+      //distance = og.read_distance();
+      if (new_distance <= deadband_high) 
+      {
+       if (new_distance >= deadband_low)
+        distance = old_distance;
+        DEBUG_PRINTLN("Measurement is inside deadband range!");
+      }
+      else 
+      {
+        distance = new_distance;
+      }
+      /* END Custom logic */
+
       door_status = (distance>threshold)?0:1; 
       if (og.options[OPTION_MNT].ival == OG_MNT_SIDE){
        door_status = 1-door_status;  // reverse logic for side mount
