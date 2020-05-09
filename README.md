@@ -4,7 +4,7 @@
 
 My intent is to add a feature to eliminate an issue I was seeing in my device. I'm hoping to add configuration variables that will allow the user to add specific acceptable reading ranges. My sensor reads erroneous values (always consistently the same wrong value). I want to add a UI setting that allows the sensor to dismiss the readings if they are in a specific range.
 
-Custom code has been added to two files to enable a "deadband" in the ultrasonic sensor that will not trigger any changes. This was added to correct erroneous readings from my ultrasonic sensor. It would sporatically kick out a reading of 6 cm when I knew that was invalid. My code creates a deadband between 0 cm and 10 cm where the new, incorrect will be discarded in favor of the last known acceptable reading. The changes are as follows:
+Custom code has been added to two files to enable a "deadband" in the ultrasonic sensor that will not trigger any changes. This was added to correct erroneous readings from my ultrasonic sensor. It would sporatically kick out a reading of 6 cm when I knew that was invalid. My code creates a deadband between 0 cm and 10 cm where the incorrect reading will be discarded in favor of the last known acceptable reading. The changes are as follows:
 
 defines.h starting at line 107
 
